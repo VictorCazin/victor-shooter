@@ -28,9 +28,8 @@ class HealthBar(pygame.sprite.Sprite):
         self.rect.topright = HB_TOPRIGHT
 
 
-    def update(self, health):
+    def update(self):
         "called when health decrease or increase"
-        self.health = health
         self.image  = pygame.transform.scale(self.image, (int(self.health), 10))
         self.rect = self.image.get_rect()
         self.rect.topright = HB_TOPRIGHT
@@ -41,8 +40,6 @@ class GoldCounter(pygame.sprite.Sprite):
         Show how much gold the player has
     """
 
-
-
     def __init__(self, gold):
         self.font_size = 15
         pygame.sprite.Sprite.__init__(self)
@@ -51,14 +48,24 @@ class GoldCounter(pygame.sprite.Sprite):
         self.rect.topleft = GC_TOPLEFT
 
 
-        font = pygame.font.Font(None, self.font_size)
-        self.text = font.render(str(self.gold), 0, (255, 255, 255))
+        self.font = pygame.font.Font(None, self.font_size)
+        self.text = self.font.render(str(self.gold), 0, (255, 255, 255))
         self.textpos = self.text.get_rect()
         self.textpos.center= ( self.rect.centerx + 1.5 * self.rect.width,
                                self.rect.centery)
 
 
 
-    def update(self, gold):
+    def update(self):
         "called when the player earn or spend gold"
-        self.gold = gold
+        self.font = pygame.font.Font(None, self.font_size)
+        self.text = self.font.render(str(self.gold), 0, (255, 255, 255))
+        self.textpos = self.text.get_rect()
+        self.textpos.center= ( self.rect.centerx + 1.5 * self.rect.width,
+                               self.rect.centery)
+
+    def draw(self, surface):
+        print 'test'
+        #pygame.sprite.Sprite.draw(self, surface)
+        surface_blit = self.surface.blit
+        self.surface_blit(self.text, self.textpos)

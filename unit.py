@@ -107,9 +107,10 @@ class Faucheur(Creep):
     def __init__(self, position=None):
         self.image, self.rect = load_image('faucheur.bmp', colorkey=-1)
         Creep.__init__(self, position)
-        self.health = 50
+        self.health = 10
         self.speed  = 10
         self.damage = DPS(1)
+        self.gold   = 10
 
 class Mage(Creep):
     """
@@ -118,7 +119,8 @@ class Mage(Creep):
     def __init__(self, position=None):
         self.image, self.rect = load_image('mage.bmp', colorkey=-1)
         Creep.__init__(self, position)
-        self.health  = 10
+        self.health  = 50
         self.speed   = 1
         self.damage  = DPS(3)
+        self.gold    = 20
 

@@ -34,6 +34,9 @@ from functions  import *
 
 def main():
 
+
+
+
     # Modele du jeu
     gold   = 1000
     health = 200
@@ -114,7 +117,8 @@ def main():
                 for unit in pygame.sprite.spritecollide(weapon, units, 0):
                     if weapon.touch(unit):
                         unit.touched()
-
+                        gold = gold + unit.gold
+                        goldcounter.gold = gold
                         others.add(Killed(unit.rect.center))
                         unit.kill()
 
@@ -129,6 +133,7 @@ def main():
             if unit.attaque:
                 if health > 0:
                     health = health - unit.damage
+                    healthbar.health = health
 
 
 
@@ -137,7 +142,7 @@ def main():
         #*****************************
 
         # Update les sprites
-        barre_menu.update(health)
+        barre_menu.update()
         units.update()
         others.update()
 
@@ -145,9 +150,7 @@ def main():
         # Recolle les surfaces
         screen.blit(background, (0, HEIGHT_MENU))
         screen.blit(menubar, (0,0))
-        menubar.blit(goldcounter.text, goldcounter.textpos)
-
-
+        screen.blit(goldcounter.text, goldcounter.textpos)
 
 
         barre_menu.draw(screen)
