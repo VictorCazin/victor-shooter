@@ -84,19 +84,14 @@ def main():
 
 
     # Barre de vie
-    '''
-    barre = pygame.draw.rect(menubar,                    # Surface ou on dessine
-                             (250, 0, 0),                # Couleur du bord du rectangle ?
-                             (700, 10, health, 10),      # rectangle
-                             0                           # Epaisseur en pixels du bord du rectangle ?
-                            )
-
-
-    menubar.blit(barre, (500, 10))
-    '''
-
     healthbar = HealthBar(health)
     barre_menu.add(healthbar)
+
+    # Gold counter
+    goldcounter = GoldCounter(gold)
+    barre_menu.add(goldcounter)
+
+    screen.blit(goldcounter.text, goldcounter.textpos)
 
     # Clock
     clock = pygame.time.Clock()
@@ -140,13 +135,17 @@ def main():
         #*****************************
         # Prepare la frame suivante
         #*****************************
+
+        # Update les sprites
         barre_menu.update(health)
         units.update()
         others.update()
 
 
+        # Recolle les surfaces
         screen.blit(background, (0, HEIGHT_MENU))
         screen.blit(menubar, (0,0))
+        menubar.blit(goldcounter.text, goldcounter.textpos)
 
 
 

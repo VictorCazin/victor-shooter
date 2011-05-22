@@ -10,7 +10,8 @@ from functions import *
 
 
 HB_TOPRIGHT = int(0.99*WIDTH) , int(0.33 * HEIGHT_MENU)
-GC_TOPLEFT  = int(0.10*WIDTH) , int(0.33 * HEIGHT_MENU)
+GC_TOPLEFT  = int(0.10*WIDTH) , int(0.25 * HEIGHT_MENU)
+
 
 class HealthBar(pygame.sprite.Sprite):
     """
@@ -39,11 +40,23 @@ class GoldCounter(pygame.sprite.Sprite):
     """
         Show how much gold the player has
     """
+
+
+
     def __init__(self, gold):
+        self.font_size = 15
         pygame.sprite.Sprite.__init__(self)
         self.gold = gold
-        self.image, self.rect = load_image('gold.bmp', colorkey=-1, reshape= (10,10))
+        self.image, self.rect = load_image('gold.bmp', colorkey=-1, reshape= (20,20))
         self.rect.topleft = GC_TOPLEFT
+
+
+        font = pygame.font.Font(None, self.font_size)
+        self.text = font.render(str(self.gold), 0, (255, 255, 255))
+        self.textpos = self.text.get_rect()
+        self.textpos.center= ( self.rect.centerx + 1.5 * self.rect.width,
+                               self.rect.centery)
+
 
 
     def update(self, gold):
