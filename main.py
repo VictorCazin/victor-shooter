@@ -23,20 +23,12 @@ from weapon     import *
 from menu       import *
 from barrier    import *
 from functions  import *
-
-
-
-
-
+from wave       import *
 
 
 
 
 def main():
-
-
-
-
     # Modele du jeu
     gold   = 1000
     health = 200
@@ -68,12 +60,14 @@ def main():
 
 
     # Instanciations of creeps
+    wave = Wave(units)
+    '''
     for i in range(3):
         units.add(Faucheur())
 
     for i in range(5):
         units.add(Mage())
-
+    '''
 
 
     # Instanciation of main elements
@@ -112,6 +106,12 @@ def main():
 
 
     pygame.display.flip()
+
+
+
+   #*****************************
+   # DEBUT DE LA BOUCLE
+   #*****************************
 
     while 1:
         clock.tick(FRAME_RATE)
@@ -160,6 +160,8 @@ def main():
         units.update()
         others.update()
 
+        # Update la wave pour l'ecoulement du temps
+        wave.update()
 
         # Recolle les surfaces
         screen.blit(background, (0, HEIGHT_MENU))
