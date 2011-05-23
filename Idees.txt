@@ -3,3 +3,7 @@ de temps en temps : breche dans la barriere, avoir des forces de repoussement
 		    achetable : force de defense pendant la breche
 
 avoir 3 types d'arme switchable avec les key 1 2 3 : feu eau terre par exemple
+
+- modele permettant de créer des vagues automatisées, coeff de pression pour chaque unit
+  vague qui maintient un taux de pression constant ou suivant une courbe prédéterminée
+  taux de pression obtenu en choisissant une combinaison aléatoire parmi les unités dispo

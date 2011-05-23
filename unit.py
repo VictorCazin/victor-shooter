@@ -75,7 +75,6 @@ class Creep(pygame.sprite.Sprite):
         """
             called when the unit is hit
         """
-        print 'touched'
         self.health = self.health - damage
 
 

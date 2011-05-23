@@ -58,7 +58,6 @@ class GoldCounter(pygame.sprite.Sprite):
 
 
     def update(self):
-        "called when the player earn or spend gold"
         self.font = pygame.font.Font(None, self.font_size)
         self.text = self.font.render(str(self.gold), 0, (255, 255, 255))
         self.textpos = self.text.get_rect()

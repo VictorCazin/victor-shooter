@@ -26,12 +26,16 @@ class Wave:
         self.units = units_group
         self.time = 0
 
-    def release(self, creep):
+    def release(self, creep, number=1):
         """
             Instancie un creep et l'ajoute au groupe de sprite units
         """
-        self.units.add(creep())
+        for i in range(number):
+            self.units.add(creep())
 
+
+    # Autre possibilite, ajouter 1 a self.time toutes les 60 frames, on a une precision que de l'ordre de la sec pour
+    # les events mais on s'en fout, et par contre on perd moins de temps de calcul pour test_time a chaque frame
     def test_time(self, date):
         """
             verifie si self.time est a peu pres egal a date, avec un intervalle de largeur 1/FRAME_RATE
@@ -44,13 +48,21 @@ class Wave:
     def update(self):
         self.time = self.time +   1.0 / FRAME_RATE
 
+
+class Wave1(Wave):
+    def __init__(self, units_group):
+        Wave.__init__(self, units_group)
+
+    def update(self):
+        Wave.update(self)
         if self.test_time(2):
-            self.release(Mage)
-
-
-
-
-
+            self.release(Mage, 4)
+            self.release(Faucheur)
+        if self.test_time(4):
+            self.release(Faucheur, 5)
+        if self.test_time(8):
+            self.release(Faucheur, 3)
+            self.release(Mage, 6)
 
 
 
