@@ -122,6 +122,8 @@ def main():
                             goldcounter.gold = gold
                             others.add(Killed(unit.rect.center))
                             unit.kill()
+                        else:
+                            others.add(Touched(unit.rect.center, unit.speed))
 
             elif event.type == MOUSEBUTTONUP:
                 weapon.unpunch()

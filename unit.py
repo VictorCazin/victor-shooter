@@ -90,6 +90,7 @@ class Killed(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self) #call Sprite intializer
         self.image, self.rect = load_image('explosion.bmp', colorkey=-1)
         screen = pygame.display.get_surface()
+
         self.area = screen.get_rect()
         self.rect.center = position
         self.compteur = 15 # How much time the animation stays on screen
@@ -101,6 +102,34 @@ class Killed(pygame.sprite.Sprite):
         else:
             self.compteur = self.compteur - 1
 
+
+class Touched(pygame.sprite.Sprite):
+    """
+       Animation when a creep is touched but not killed
+    """
+    def __init__(self, position, speed):
+        pygame.sprite.Sprite.__init__(self) #call Sprite intializer
+        self.image, self.rect = load_image('touched.bmp', colorkey=-1)
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        self.rect.center = position
+        self.compteur = 15 # How much time the animation stays on screen
+        self.speed = speed
+
+    def update(self):
+        if (self.compteur == 0):
+            self.kill()
+        else:
+            self.compteur = self.compteur - 1
+            self._move()
+
+    def _move(self):
+        newpos = self.rect.move((self.speed,0))
+        if newpos.right >= BARRIERE:
+            newpos = self.rect.move((BARRIERE - self.rect.right, 0))
+            self.attaque = 1
+
+        self.rect = newpos
 
 
 class Faucheur(Creep):

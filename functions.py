@@ -1,3 +1,7 @@
+##
+## Contient des variables et fonctions utiles a tous les modules
+##
+
 import os, sys
 import pygame
 from pygame.locals import *
