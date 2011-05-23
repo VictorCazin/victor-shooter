@@ -64,8 +64,3 @@ class GoldCounter(pygame.sprite.Sprite):
         self.textpos.center= ( self.rect.centerx + 1.5 * self.rect.width,
                                self.rect.centery)
 
-    def draw(self, surface):
-        print 'test'
-        #pygame.sprite.Sprite.draw(self, surface)
-        surface_blit = self.surface.blit
-        self.surface_blit(self.text, self.textpos)

@@ -57,7 +57,9 @@ class Creep(pygame.sprite.Sprite):
             self._walk()
 
     def _walk(self):
-        "move the creep"
+        """
+            move the creep
+        """
         newpos = self.rect.move((self.speed,0))
 
         if newpos.right >= BARRIERE:
@@ -69,9 +71,12 @@ class Creep(pygame.sprite.Sprite):
 
 
 
-    def touched(self):
-        "this will cause the monkey to start spinning"
+    def touched(self, damage):
+        """
+            called when the unit is hit
+        """
         print 'touched'
+        self.health = self.health - damage
 
 
 
@@ -82,17 +87,15 @@ class Killed(pygame.sprite.Sprite):
        Animation when a creep is killed
     """
     def __init__(self, position):
-
         pygame.sprite.Sprite.__init__(self) #call Sprite intializer
         self.image, self.rect = load_image('explosion.bmp', colorkey=-1)
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.rect.center = position
-        self.compteur = 15
+        self.compteur = 15 # How much time the animation stays on screen
 
 
     def update(self):
-        "walk or spin, depending on the monkeys state"
         if (self.compteur == 0):
             self.kill()
         else:
@@ -119,7 +122,7 @@ class Mage(Creep):
     def __init__(self, position=None):
         self.image, self.rect = load_image('mage.bmp', colorkey=-1)
         Creep.__init__(self, position)
-        self.health  = 50
+        self.health  = 30
         self.speed   = 1
         self.damage  = DPS(3)
         self.gold    = 20

@@ -81,7 +81,7 @@ def main():
     barrier = Barrier()
     others.add(barrier)
 
-    weapon = Weapon()
+    weapon = SimpleGun()
     others.add(weapon)
 
 
@@ -116,11 +116,12 @@ def main():
             elif event.type == MOUSEBUTTONDOWN:
                 for unit in pygame.sprite.spritecollide(weapon, units, 0):
                     if weapon.touch(unit):
-                        unit.touched()
-                        gold = gold + unit.gold
-                        goldcounter.gold = gold
-                        others.add(Killed(unit.rect.center))
-                        unit.kill()
+                        unit.touched(weapon.damage)
+                        if (unit.health <= 0):
+                            gold = gold + unit.gold
+                            goldcounter.gold = gold
+                            others.add(Killed(unit.rect.center))
+                            unit.kill()
 
             elif event.type == MOUSEBUTTONUP:
                 weapon.unpunch()

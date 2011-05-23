@@ -44,3 +44,10 @@ class Weapon(pygame.sprite.Sprite):
     def unpunch(self):
         "called to pull the cursor back"
         self.punching = 0
+
+
+class SimpleGun(Weapon):
+    """moves a clenched cursor on the screen, following the mouse"""
+    def __init__(self):
+        Weapon.__init__(self)
+        self.damage = 10
