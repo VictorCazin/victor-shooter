@@ -9,7 +9,6 @@ if not pygame.mixer: print 'Warning, sound disabled'
 from functions import *
 
 
-HB_TOPRIGHT = int(0.99*WIDTH) , int(0.33 * HEIGHT_MENU)
 GC_TOPLEFT  = int(0.10*WIDTH) , int(0.25 * HEIGHT_MENU)
 
 
@@ -17,22 +16,24 @@ class HealthBar(pygame.sprite.Sprite):
     """
         Show how much health the main base has left
     """
-    def __init__(self, health):
+    def __init__(self, health, topright, height):
         pygame.sprite.Sprite.__init__(self)
         self.health = health
+        self.topright = topright
+        self.height = height
 		#self._image = spritesheet.get_image(Rect((448, 0), (128, 64)))
-        self.image = pygame.surface.Surface((self.health, 10))
+        self.image = pygame.surface.Surface((self.health, height))
     	#self.rect = Rect((320 - 64, 0), (128, 64))
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()
-        self.rect.topright = HB_TOPRIGHT
+        self.rect.topright = self.topright
 
 
     def update(self):
         "called when health decrease or increase"
-        self.image  = pygame.transform.scale(self.image, (int(self.health), 10))
+        self.image  = pygame.transform.scale(self.image, (int(self.health), self.height))
         self.rect = self.image.get_rect()
-        self.rect.topright = HB_TOPRIGHT
+        self.rect.topright = self.topright
 
 
 class GoldCounter(pygame.sprite.Sprite):

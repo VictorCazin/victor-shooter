@@ -41,7 +41,6 @@ def main():
     gold   = 1000
     health = 200
 
-
     # Initialization of the window
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT + HEIGHT_MENU))
@@ -85,10 +84,22 @@ def main():
     others.add(weapon)
 
 
-
+    #********************
     # Barre de vie
-    healthbar = HealthBar(health)
+    #********************
+
+    # Barre de vie rouge
+    HEALTHBAR_HEIGHT = 10
+    HB_TOPRIGHT      = (int(0.99*WIDTH) , int(0.33 * HEIGHT_MENU))
+    healthbar = HealthBar(health, HB_TOPRIGHT, HEALTHBAR_HEIGHT)
     barre_menu.add(healthbar)
+
+    # Barre vide (rectangle blanc) a coller derriere la pleine, permet de voir la barre "se vider"
+    BV_TOPLEFT = (HB_TOPRIGHT[0] - health, HB_TOPRIGHT[1]) # Barre Vide Topleft
+    barre_vide = pygame.surface.Surface((health, HEALTHBAR_HEIGHT))
+    barre_vide.convert()
+    barre_vide.fill((255,255,255))
+
 
     # Gold counter
     goldcounter = GoldCounter(gold)
@@ -153,6 +164,7 @@ def main():
         # Recolle les surfaces
         screen.blit(background, (0, HEIGHT_MENU))
         screen.blit(menubar, (0,0))
+        screen.blit(barre_vide, BV_TOPLEFT)
         screen.blit(goldcounter.text, goldcounter.textpos)
 
 

@@ -113,7 +113,7 @@ class Touched(pygame.sprite.Sprite):
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.rect.center = position
-        self.compteur = 15 # How much time the animation stays on screen
+        self.compteur = 10 # How much time the animation stays on screen
         self.speed = speed
 
     def update(self):
