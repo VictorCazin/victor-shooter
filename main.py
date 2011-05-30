@@ -117,6 +117,12 @@ class Main():
 
 
     def unit_attacked(self, unit, damage):
+        """
+            called when a unit is attacked
+            decrease health of unit, kill it if necessary
+            handle animation of the unit touched
+            increase corresponding gold
+        """
         unit.touched(damage)
         if (unit.health <= 0):
             self.gold += unit.gold
@@ -154,20 +160,19 @@ class Main():
             #*****************************
             # Modele du jeu
             #*****************************
+
+            # Les unit a la barriere attaquent
             for unit in self.units:
                 if unit.attaque:
                     if self.health > 0:
                         self.health -= unit.damage
                         self.healthbar.health = self.health
 
+            # Gere les attaques des allies
             for ally in self.allies:
                 if ally.attaque:
-                    ally.target.touched(ally.damage)
+                    self.unit_attacked(ally.target, ally.damage)
                     if (ally.target.health <= 0):
-                                self.gold += unit.gold
-                                self.goldcounter.gold = self.gold
-                                self.others.add(Killed(ally.target.rect.center))
-                                ally.target.kill()
                                 ally.attaque = 0
                                 ally.has_target = 0
                                 ally.find_new_target()
