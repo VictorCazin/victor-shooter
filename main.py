@@ -24,6 +24,7 @@ from menu       import *
 from barrier    import *
 from functions  import *
 from wave       import *
+from allies     import *
 
 
 
@@ -77,6 +78,8 @@ def main():
     weapon = SimpleGun()
     others.add(weapon)
 
+    swordman = Swordman(units)
+    others.add(swordman)
 
     #********************
     # Barre de vie

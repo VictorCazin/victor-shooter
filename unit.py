@@ -69,8 +69,6 @@ class Creep(pygame.sprite.Sprite):
         self.rect = newpos
 
 
-
-
     def touched(self, damage):
         """
             called when the unit is hit
@@ -139,7 +137,7 @@ class Faucheur(Creep):
         self.image, self.rect = load_image('faucheur.bmp', colorkey=-1)
         Creep.__init__(self, position)
         self.health = 10
-        self.speed  = 10
+        self.speed  = 5
         self.damage = DPS(1)
         self.gold   = 10
 

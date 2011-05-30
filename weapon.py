@@ -34,13 +34,14 @@ class Weapon(pygame.sprite.Sprite):
         pos = pygame.mouse.get_pos()
         self.rect.midtop = pos
         if self.shooting:
-            self.rect.move_ip(5, 10)
+            self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
 
     def touch(self, target):
         """ returns true if the fist collides with the target """
         if not self.shooting:
             self.shooting = 1
-            hitbox = self.rect.inflate(-5, -5)
+            hitbox = self.rect.inflate(-5, -5) # Reduit le rect du sprite au moment ou on tire
+                                               # pour une meilleure precision
             return hitbox.colliderect(target.rect)
 
     def unpunch(self):

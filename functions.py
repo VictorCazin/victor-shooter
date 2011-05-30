@@ -31,3 +31,10 @@ def load_image(name, colorkey=None, reshape=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
+def DPS(damage_per_second):
+    """
+        compute the damage per frame from the damage per second
+    """
+    damage_per_frame = damage_per_second / FRAME_RATE
+    return damage_per_frame
+
