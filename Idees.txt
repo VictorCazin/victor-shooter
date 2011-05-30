@@ -7,3 +7,8 @@ avoir 3 types d'arme switchable avec les key 1 2 3 : feu eau terre par exemple
 - modele permettant de créer des vagues automatisées, coeff de pression pour chaque unit
   vague qui maintient un taux de pression constant ou suivant une courbe prédéterminée
   taux de pression obtenu en choisissant une combinaison aléatoire parmi les unités dispo
+
+Upgrade : intelligence du swordman
+	 1. Choix de la cible aleatoire
+	 2. CHoix de la plus proche cible
+	 3. Peut changer de cible si une plus proche arrive

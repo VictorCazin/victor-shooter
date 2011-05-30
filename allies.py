@@ -93,6 +93,8 @@ class Swordman(Ally):
                 self.rect = newpos
 
     def find_new_target(self):
+        self.can_attack = 0
+        self.has_target = 0
         distance = 2*HEIGHT
         for unit in self.units:
                     if unit.attaque: # On suppose pour l'instant que toutes les unites sont a la barriere lorsqu'elles attaquent
