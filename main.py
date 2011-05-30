@@ -124,7 +124,7 @@ class Main():
             increase corresponding gold
         """
         unit.touched(damage)
-        if (unit.health <= 0):
+        if unit.dead :
             self.gold += unit.gold
             self.goldcounter.gold = self.gold
             self.others.add(Killed(unit.rect.center))
@@ -170,10 +170,12 @@ class Main():
 
             # Gere les attaques des allies
             for ally in self.allies:
+                if ally.has_target and ally.target.dead: # Verifie que la target est encore en vie
+                    ally.find_new_target()
                 if ally.attaque:
                     self.unit_attacked(ally.target, ally.damage)
                     ally.attaque = 0
-                    if (ally.target.health <= 0):
+                    if ally.target.dead:
                                 ally.find_new_target()
 
             #*****************************

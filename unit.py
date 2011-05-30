@@ -36,7 +36,8 @@ class Creep(pygame.sprite.Sprite):
         #self.image, self.rect = load_image('creep.bmp', -1)
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
-        self.attaque= 0
+        self.attaque = 0
+        self.dead = 0
 
         if position is None:
             position_depart = randint(HEIGHT_MENU + self.rect.width, HEIGHT - self.rect.height)
@@ -69,6 +70,8 @@ class Creep(pygame.sprite.Sprite):
             called when the unit is hit
         """
         self.health = self.health - damage
+        if (self.health <= 0):
+            self.dead = 1
 
 
 
