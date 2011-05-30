@@ -86,7 +86,6 @@ class Swordman(Ally):
                     if unit.attaque: # On suppose pour l'instant que toutes les unites sont a la barriere lorsqu'elles attaquent
                         new_distance = abs(unit.rect.centery - self.rect.centery)
                         if new_distance < distance:
-                            print "CACA"
                             distance = new_distance
                             self.target = unit
                             self.has_target = 1

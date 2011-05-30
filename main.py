@@ -29,171 +29,178 @@ from allies     import *
 
 
 
-def main():
-    # Modele du jeu
-    gold   = 1000
-    health = 200
+class Main():
 
-    # Initialization of the window
-    pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT + HEIGHT_MENU))
-
-    pygame.display.set_caption('Victor Shooter')
-    pygame.mouse.set_visible(0)
-
-
-    # Initialization of the background (part of the creeps)
-    background = pygame.Surface((WIDTH, HEIGHT))
-    background = background.convert()
-    background.fill((100, 100, 100))
-
-    screen.blit(background, (0, HEIGHT_MENU))
-
-    # Barre du menu
-    menubar = pygame.Surface((WIDTH, HEIGHT_MENU))
-    menubar = menubar.convert()
-    menubar.fill((101, 67, 33))
-
-    # Sprite groups
-    barre_menu = pygame.sprite.RenderPlain()
-    units      = pygame.sprite.RenderPlain()
-    allies     = pygame.sprite.RenderPlain()
-    others     = pygame.sprite.RenderPlain()
-
-
-    # Instanciations of creeps
-    wave = Wave1(units)
-    '''
-    for i in range(3):
-        units.add(Faucheur())
-
-    for i in range(5):
-        units.add(Mage())
-    '''
-
-
-    # Instanciation of main elements
-    barrier = Barrier()
-    others.add(barrier)
-
-    weapon = SimpleGun()
-    others.add(weapon)
-
-    swordman = Swordman(units)
-    allies.add(swordman)
-
-    #********************
-    # Barre de vie
-    #********************
-
-    # Barre de vie rouge
-    HEALTHBAR_HEIGHT = 10
-    HB_TOPRIGHT      = (int(0.99*WIDTH) , int(0.33 * HEIGHT_MENU))
-    healthbar = HealthBar(health, HB_TOPRIGHT, HEALTHBAR_HEIGHT)
-    barre_menu.add(healthbar)
-
-    # Barre vide (rectangle blanc) a coller derriere la pleine, permet de voir la barre "se vider"
-    BV_TOPLEFT = (HB_TOPRIGHT[0] - health, HB_TOPRIGHT[1]) # Barre Vide Topleft
-    barre_vide = pygame.surface.Surface((health, HEALTHBAR_HEIGHT))
-    barre_vide.convert()
-    barre_vide.fill((255,255,255))
-
-
-    # Gold counter
-    goldcounter = GoldCounter(gold)
-    barre_menu.add(goldcounter)
-
-    screen.blit(goldcounter.text, goldcounter.textpos)
-
-    # Clock
-    clock = pygame.time.Clock()
-
-
-    pygame.display.flip()
-
-
-
-   #*****************************
-   # DEBUT DE LA BOUCLE
-   #*****************************
-
-    while 1:
-        clock.tick(FRAME_RATE)
-
-        #*****************************
-        # User events
-        #*****************************
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                return
-            elif event.type == KEYDOWN and event.key == K_ESCAPE:
-                return
-            elif event.type == MOUSEBUTTONDOWN:
-                for unit in pygame.sprite.spritecollide(weapon, units, 0):
-                    if weapon.touch(unit):
-                        unit.touched(weapon.damage)
-                        if (unit.health <= 0):
-                            gold = gold + unit.gold
-                            goldcounter.gold = gold
-                            others.add(Killed(unit.rect.center))
-                            unit.kill()
-                        else:
-                            others.add(Touched(unit.rect.center, unit.speed))
-
-            elif event.type == MOUSEBUTTONUP:
-                weapon.unpunch()
-
-
-        #*****************************
+    def __init__(self):
         # Modele du jeu
-        #*****************************
-        for unit in units:
-            if unit.attaque:
-                if health > 0:
-                    health = health - unit.damage
-                    healthbar.health = health
+        self.gold   = 1000
+        self.health = 200
 
-        for ally in allies:
-            if ally.attaque:
-                ally.target.touched(ally.damage)
-                if (ally.target.health <= 0):
-                            gold = gold + unit.gold
-                            goldcounter.gold = gold
-                            others.add(Killed(ally.target.rect.center))
-                            ally.target.kill()
-                            ally.attaque = 0
-                            ally.has_target = 0
-                            ally.find_new_target()
+        # Initialization of the window
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT + HEIGHT_MENU))
 
-        #*****************************
-        # Prepare la frame suivante
-        #*****************************
-
-        # Update les sprites
-        barre_menu.update()
-        units.update()
-        allies.update()
-        others.update()
-
-        # Update la wave pour l'ecoulement du temps
-        wave.update()
-
-        # Recolle les surfaces
-        screen.blit(background, (0, HEIGHT_MENU))
-        screen.blit(menubar, (0,0))
-        screen.blit(barre_vide, BV_TOPLEFT)
-        screen.blit(goldcounter.text, goldcounter.textpos)
+        pygame.display.set_caption('Victor Shooter')
+        pygame.mouse.set_visible(0)
 
 
-        barre_menu.draw(screen)
-        units.draw(screen)
-        others.draw(screen)
-        allies.draw(screen)
+        # Initialization of the background (part of the creeps)
+        self.background = pygame.Surface((WIDTH, HEIGHT))
+        self.background = self.background.convert()
+        self.background.fill((100, 100, 100))
+
+        self.screen.blit(self.background, (0, HEIGHT_MENU))
+
+        # Barre du menu
+        self.menubar = pygame.Surface((WIDTH, HEIGHT_MENU))
+        self.menubar = self.menubar.convert()
+        self.menubar.fill((101, 67, 33))
+
+        # Sprite groups
+        self.barre_menu = pygame.sprite.RenderPlain()
+        self.units      = pygame.sprite.RenderPlain()
+        self.allies     = pygame.sprite.RenderPlain()
+        self.others     = pygame.sprite.RenderPlain()
+
+
+        # Instanciations of creeps
+        self.wave = Wave1(self.units)
+        '''
+        for i in range(3):
+            units.add(Faucheur())
+
+        for i in range(5):
+            units.add(Mage())
+        '''
+
+
+        # Instanciation of main elements
+        self.barrier = Barrier()
+        self.others.add(self.barrier)
+
+        self.weapon = SimpleGun()
+        self.others.add(self.weapon)
+
+        self.swordman = Swordman(self.units)
+        self.allies.add(self.swordman)
+
+        #********************
+        # Barre de vie
+        #********************
+
+        # Barre de vie rouge
+        self.HEALTHBAR_HEIGHT = 10
+        self.HB_TOPRIGHT      = (int(0.99*WIDTH) , int(0.33 * HEIGHT_MENU))
+        self.healthbar = HealthBar(self.health, self.HB_TOPRIGHT, self.HEALTHBAR_HEIGHT)
+        self.barre_menu.add(self.healthbar)
+
+        # Barre vide (rectangle blanc) a coller derriere la pleine, permet de voir la barre "se vider"
+        self.BV_TOPLEFT = (self.HB_TOPRIGHT[0] - self.health, self.HB_TOPRIGHT[1]) # Barre Vide Topleft
+        self.barre_vide = pygame.surface.Surface((self.health, self.HEALTHBAR_HEIGHT))
+        self.barre_vide.convert()
+        self.barre_vide.fill((255,255,255))
+
+
+        # Gold counter
+        self.goldcounter = GoldCounter(self.gold)
+        self.barre_menu.add(self.goldcounter)
+
+        self.screen.blit(self.goldcounter.text, self.goldcounter.textpos)
+
+        # Clock
+        self.clock = pygame.time.Clock()
+
 
         pygame.display.flip()
+
+        self.debut_jeu()
+
+
+    def unit_attacked(self, unit, damage):
+        unit.touched(damage)
+        if (unit.health <= 0):
+            self.gold += unit.gold
+            self.goldcounter.gold = self.gold
+            self.others.add(Killed(unit.rect.center))
+            unit.kill()
+        else:
+            self.others.add(Touched(unit.rect.center, unit.speed))
+
+    def debut_jeu(self):
+       #*****************************
+       # DEBUT DE LA BOUCLE
+       #*****************************
+
+        while 1:
+            self.clock.tick(FRAME_RATE)
+
+            #*****************************
+            # User events
+            #*****************************
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    return
+                elif event.type == KEYDOWN and event.key == K_ESCAPE:
+                    return
+                elif event.type == MOUSEBUTTONDOWN:
+                    for unit in pygame.sprite.spritecollide(self.weapon, self.units, 0):
+                        if self.weapon.touch(unit):
+                            self.unit_attacked(unit, self.weapon.damage)
+
+                elif event.type == MOUSEBUTTONUP:
+                    self.weapon.unpunch()
+
+
+            #*****************************
+            # Modele du jeu
+            #*****************************
+            for unit in self.units:
+                if unit.attaque:
+                    if self.health > 0:
+                        self.health -= unit.damage
+                        self.healthbar.health = self.health
+
+            for ally in self.allies:
+                if ally.attaque:
+                    ally.target.touched(ally.damage)
+                    if (ally.target.health <= 0):
+                                self.gold += unit.gold
+                                self.goldcounter.gold = self.gold
+                                self.others.add(Killed(ally.target.rect.center))
+                                ally.target.kill()
+                                ally.attaque = 0
+                                ally.has_target = 0
+                                ally.find_new_target()
+
+            #*****************************
+            # Prepare la frame suivante
+            #*****************************
+
+            # Update les sprites
+            self.barre_menu.update()
+            self.units.update()
+            self.allies.update()
+            self.others.update()
+
+            # Update la wave pour l'ecoulement du temps
+            self.wave.update()
+
+            # Recolle les surfaces
+            self.screen.blit(self.background, (0, HEIGHT_MENU))
+            self.screen.blit(self.menubar, (0,0))
+            self.screen.blit(self.barre_vide, self.BV_TOPLEFT)
+            self.screen.blit(self.goldcounter.text, self.goldcounter.textpos)
+
+
+            self.barre_menu.draw(self.screen)
+            self.units.draw(self.screen)
+            self.others.draw(self.screen)
+            self.allies.draw(self.screen)
+
+            pygame.display.flip()
 
 
 
 
 if __name__ == '__main__':
-    main()
+    main = Main()
