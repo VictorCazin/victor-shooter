@@ -163,8 +163,6 @@ def main():
                             ally.target.kill()
                             ally.attaque = 0
                             ally.has_killed = 1
-                print " Vie = ", ally.target.health
-
 
         #*****************************
         # Prepare la frame suivante
