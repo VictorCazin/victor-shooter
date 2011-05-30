@@ -162,7 +162,8 @@ def main():
                             others.add(Killed(ally.target.rect.center))
                             ally.target.kill()
                             ally.attaque = 0
-                            ally.has_killed = 1
+                            ally.has_target = 0
+                            ally.find_new_target()
 
         #*****************************
         # Prepare la frame suivante
