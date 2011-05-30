@@ -1,0 +1,8 @@
+choisir aleatoirement la prochaine unit qui va spawner, avec un coef de proba
+inversement proportionnel a son coef de pression puis attendre en suivant la
+courbe de pression jusqu'a ce qu'on puisse release l'unit en question
+
+Probleme : vide avant une grosse unit, plein d'unit juste apres
+Solution : en cas de grosse unit tiree aleatoirement : a chaque instant, epargner une partie de la pression pour les grosses unit, 
+           envoyer une autre partie pour les petites
+	  (grosse unit : pression superieure a la pression d'un instant ?)
