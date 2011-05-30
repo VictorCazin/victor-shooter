@@ -40,11 +40,11 @@ class Creep(pygame.sprite.Sprite):
         self.dead = 0
 
         if position is None:
-            position_depart = randint(HEIGHT_MENU + self.rect.width, HEIGHT - self.rect.height)
+            position_depart = randint(HEIGHT_MENU, HEIGHT_MENU + HEIGHT - self.rect.height)
         else:
             position_depart = position
 
-        self.rect.topleft = 0, position_depart - self.rect.width # The creep apparition is randomly distributed
+        self.rect.topleft = 0, position_depart # The creep apparition is randomly distributed
 
     def update(self):
         if self.attaque:
