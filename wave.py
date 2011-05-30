@@ -55,7 +55,7 @@ class Wave1(Wave):
 
     def update(self):
         Wave.update(self)
-        if self.test_time(2):
+        if self.test_time(1):
             self.release(Mage, 4)
             self.release(Faucheur)
         if self.test_time(4):

@@ -2,9 +2,13 @@
 ## Contient des variables et fonctions utiles a tous les modules
 ##
 
+from __future__ import division
+
 import os, sys
 import pygame
 from pygame.locals import *
+
+
 
 FRAME_RATE   = 60
 

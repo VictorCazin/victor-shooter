@@ -57,6 +57,7 @@ def main():
     # Sprite groups
     barre_menu = pygame.sprite.RenderPlain()
     units      = pygame.sprite.RenderPlain()
+    allies     = pygame.sprite.RenderPlain()
     others     = pygame.sprite.RenderPlain()
 
 
@@ -79,7 +80,7 @@ def main():
     others.add(weapon)
 
     swordman = Swordman(units)
-    others.add(swordman)
+    allies.add(swordman)
 
     #********************
     # Barre de vie
@@ -152,6 +153,17 @@ def main():
                     health = health - unit.damage
                     healthbar.health = health
 
+        for ally in allies:
+            if ally.attaque:
+                ally.target.touched(ally.damage)
+                if (ally.target.health <= 0):
+                            gold = gold + unit.gold
+                            goldcounter.gold = gold
+                            others.add(Killed(ally.target.rect.center))
+                            ally.target.kill()
+                            ally.attaque = 0
+                            ally.has_killed = 1
+                print " Vie = ", ally.target.health
 
 
         #*****************************
@@ -161,6 +173,7 @@ def main():
         # Update les sprites
         barre_menu.update()
         units.update()
+        allies.update()
         others.update()
 
         # Update la wave pour l'ecoulement du temps
@@ -176,6 +189,7 @@ def main():
         barre_menu.draw(screen)
         units.draw(screen)
         others.draw(screen)
+        allies.draw(screen)
 
         pygame.display.flip()
 

@@ -24,12 +24,7 @@ if not pygame.mixer: print 'Warning, sound disabled'
 from functions import *
 
 
-def DPS(damage_per_second):
-    """
-        compute the damage per frame from the damage per second
-    """
-    damage_per_frame = damage_per_second / FRAME_RATE
-    return damage_per_frame
+
 
 
 class Creep(pygame.sprite.Sprite):
@@ -137,7 +132,7 @@ class Faucheur(Creep):
         self.image, self.rect = load_image('faucheur.bmp', colorkey=-1)
         Creep.__init__(self, position)
         self.health = 10
-        self.speed  = 5
+        self.speed  = 10
         self.damage = DPS(1)
         self.gold   = 10
 
