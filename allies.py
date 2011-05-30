@@ -51,24 +51,36 @@ class Swordman(Ally):
         Ally.__init__(self)
         self.units = unit_group
         self.health  = 30
-        self.speed   = 10
-        self.damage  = DPS(10)
+        self.speed   = 3
+        self.damage  = 10
         self.has_target = 0
+        self.can_attack = 0
         self.attaque = 0
+        self.cadence = 2 * FRAME_RATE
+        self.time_before_next_hit =  1
 
     def update(self):
-        if not self.attaque:
+        if not self.can_attack:
+            if self.time_before_next_hit > 1:
+                self.time_before_next_hit -= 1
             if self.has_target:
                 self._walk()
             else:
                 self.find_new_target()
+        else:
+            self.time_before_next_hit -=1
+            if self.time_before_next_hit == 0:
+                self.time_before_next_hit = self.cadence
+                self.attaque = 1
+
+
 
     def _walk(self):
         """
             move the swordman
         """
         if self.target.rect.centery == self.rect.centery:
-            self.attaque = 1
+            self.can_attack = 1
         else:
             if abs(self.target.rect.centery - self.rect.centery) <= self.speed:
                 self.rect.centery = self.target.rect.centery

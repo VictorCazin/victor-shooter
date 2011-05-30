@@ -172,8 +172,9 @@ class Main():
             for ally in self.allies:
                 if ally.attaque:
                     self.unit_attacked(ally.target, ally.damage)
+                    ally.attaque = 0
                     if (ally.target.health <= 0):
-                                ally.attaque = 0
+                                ally.can_attack = 0
                                 ally.has_target = 0
                                 ally.find_new_target()
 
