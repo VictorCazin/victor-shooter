@@ -84,8 +84,8 @@ class Main():
         self.swordman = Swordman(self.units)
         self.allies.add(self.swordman)
 
-        #self.gunman = Gunman(self.units)
-        #self.allies.add(self.gunman)
+        self.gunman = Gunman(self.units)
+        self.allies.add(self.gunman)
 
         #********************
         # Barre de vie

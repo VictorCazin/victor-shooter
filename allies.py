@@ -23,34 +23,15 @@ class Ally(pygame.sprite.Sprite):
     """
        Create a creep
     """
-    def __init__(self):
+    def __init__(self, unit_group):
         pygame.sprite.Sprite.__init__(self) #call Sprite intializer
         #self.image, self.rect = load_image('creep.bmp', -1)
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
-        self.attaque= 0
-
-
-
-
-class Swordman(Ally):
-    """
-       Create a swordman
-    """
-    def __init__(self, unit_group):
-        self.image, self.rect = load_image('swordman.bmp', colorkey=-1)
-        Ally.__init__(self)
-        self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
-
         self.units = unit_group
-        self.health  = 30
-        self.speed   = 3
-        self.damage  = 10
 
+        self.attaque    = 0
         self.has_target = 0
-        self.can_attack = 0
-        self.attaque = 0
-        self.cadence = 2 * FRAME_RATE
         self.time_before_next_hit =  1
 
     def update(self):
@@ -61,6 +42,28 @@ class Swordman(Ally):
                 self._aim()
         else:
             self.find_new_target()
+
+
+
+
+class Swordman(Ally):
+    """
+       Create a swordman
+    """
+    def __init__(self, unit_group):
+        self.image, self.rect = load_image('swordman.bmp', colorkey=-1)
+        Ally.__init__(self, unit_group)
+        self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
+
+
+        self.health  = 30
+        self.speed   = 3
+        self.damage  = 10
+        self.cadence = 2 * FRAME_RATE
+
+        self.can_attack = 0
+
+
 
     def _aim(self):
         if not self.can_attack:
@@ -114,18 +117,15 @@ class Gunman(Ally):
     """
     def __init__(self, unit_group):
         self.image, self.rect = load_image('gunman.bmp', colorkey=-1)
-        Ally.__init__(self)
+        Ally.__init__(self, unit_group)
         self.rect.midleft = BARRIERE + 40, int((HEIGHT_MENU + HEIGHT)/3)
 
-        self.units = unit_group
         self.health  = 30
         self.speed   = 3
         self.damage  = 10
-
-        self.has_target = 0
-        self.attaque = 0
         self.cadence = 2 * FRAME_RATE
-        self.time_before_next_hit =  1
+
+
 
     def update(self):
         if self.has_target:
