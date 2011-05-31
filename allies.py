@@ -54,7 +54,15 @@ class Swordman(Ally):
         self.time_before_next_hit =  1
 
     def update(self):
-        self.attaque = 0
+        if self.has_target:
+            if self.attaque:
+                self.attaque = 0
+            else:
+                self._aim()
+        else:
+            self.find_new_target()
+
+    def _aim(self):
         if not self.can_attack:
             if self.time_before_next_hit > 1:
                 self.time_before_next_hit -= 1
@@ -127,7 +135,6 @@ class Gunman(Ally):
             self.find_new_target()
 
 
-
     def _aim(self):
         """
             called when the gunman has a target and gets ready to shoot
@@ -136,7 +143,6 @@ class Gunman(Ally):
         if self.time_before_next_hit == 0:
             self.time_before_next_hit = self.cadence
             self.attaque = 1
-
 
 
     def find_new_target(self):

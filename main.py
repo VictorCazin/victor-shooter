@@ -84,8 +84,8 @@ class Main():
         self.swordman = Swordman(self.units)
         self.allies.add(self.swordman)
 
-        self.gunman = Gunman(self.units)
-        self.allies.add(self.gunman)
+        #self.gunman = Gunman(self.units)
+        #self.allies.add(self.gunman)
 
         #********************
         # Barre de vie
@@ -178,8 +178,7 @@ class Main():
                 elif ally.attaque:
                     self.unit_attacked(ally.target, ally.damage)
                     #ally.attaque = 0
-                    if ally.target.dead:
-                                ally.find_new_target()
+
 
             #*****************************
             # Prepare la frame suivante
