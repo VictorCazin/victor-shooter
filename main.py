@@ -174,7 +174,7 @@ class Main():
                     ally.find_new_target()
                 if ally.attaque:
                     self.unit_attacked(ally.target, ally.damage)
-                    ally.attaque = 0
+                    #ally.attaque = 0
                     if ally.target.dead:
                                 ally.find_new_target()
 

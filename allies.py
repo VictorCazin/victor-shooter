@@ -30,17 +30,8 @@ class Ally(pygame.sprite.Sprite):
         self.area = screen.get_rect()
         self.attaque= 0
 
-        self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
-    '''
-    def update(self):
-        pass
 
-    def _walk(self):
-        """
-            move the creep
-        """
-        pass
-    '''
+
 
 class Swordman(Ally):
     """
@@ -49,10 +40,13 @@ class Swordman(Ally):
     def __init__(self, unit_group):
         self.image, self.rect = load_image('swordman.bmp', colorkey=-1)
         Ally.__init__(self)
+        self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
+
         self.units = unit_group
         self.health  = 30
         self.speed   = 3
         self.damage  = 10
+
         self.has_target = 0
         self.can_attack = 0
         self.attaque = 0
@@ -60,6 +54,7 @@ class Swordman(Ally):
         self.time_before_next_hit =  1
 
     def update(self):
+        self.attaque = 0
         if not self.can_attack:
             if self.time_before_next_hit > 1:
                 self.time_before_next_hit -= 1
@@ -72,7 +67,6 @@ class Swordman(Ally):
             if self.time_before_next_hit == 0:
                 self.time_before_next_hit = self.cadence
                 self.attaque = 1
-
 
 
     def _walk(self):
@@ -91,6 +85,57 @@ class Swordman(Ally):
                     signe = -1
                 newpos = self.rect.move((0,signe*self.speed))
                 self.rect = newpos
+
+    def find_new_target(self):
+        self.can_attack = 0
+        self.has_target = 0
+        distance = 2*HEIGHT
+        for unit in self.units:
+                    if unit.attaque: # On suppose pour l'instant que toutes les unites sont a la barriere lorsqu'elles attaquent
+                        new_distance = abs(unit.rect.centery - self.rect.centery)
+                        if new_distance < distance:
+                            distance = new_distance
+                            self.target = unit
+                            self.has_target = 1
+
+class Gunman(Ally):
+    """
+       Create a swordman
+    """
+    def __init__(self, unit_group):
+        self.image, self.rect = load_image('swordman.bmp', colorkey=-1)
+        Ally.__init__(self)
+        self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
+
+        self.units = unit_group
+        self.health  = 30
+        self.speed   = 3
+        self.damage  = 10
+
+        self.has_target = 0
+        self.can_attack = 0
+        self.attaque = 0
+        self.cadence = 2 * FRAME_RATE
+        self.time_before_next_hit =  1
+
+    def update(self):
+        if self.has_target:
+            self._aim()
+        else:
+            self.find_new_target()
+
+
+
+    def _aim(self):
+        """
+            called when the gunman has a target and get ready to shoot
+        """
+        self.time_before_next_hit -=1
+        if self.time_before_next_hit == 0:
+            self.time_before_next_hit = self.cadence
+            self.attaque = 1
+
+
 
     def find_new_target(self):
         self.can_attack = 0
