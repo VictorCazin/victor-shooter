@@ -95,6 +95,8 @@ class Swordman(Ally):
                 self.rect = newpos
 
     def find_new_target(self):
+        if self.time_before_next_hit > 1:
+            self.time_before_next_hit -= 1
         self.can_attack = 0
         self.has_target = 0
         distance = 2*HEIGHT

@@ -177,8 +177,6 @@ class Main():
                     ally.find_new_target()
                 elif ally.attaque:
                     self.unit_attacked(ally.target, ally.damage)
-                    #ally.attaque = 0
-
 
             #*****************************
             # Prepare la frame suivante
