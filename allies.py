@@ -43,7 +43,10 @@ class Ally(pygame.sprite.Sprite):
         else:
             self.find_new_target()
 
-
+    def find_new_target(self):
+        if self.time_before_next_hit > 1:
+            self.time_before_next_hit -= 1
+        self.has_target = 0
 
 
 class Swordman(Ally):
@@ -55,8 +58,6 @@ class Swordman(Ally):
         Ally.__init__(self, unit_group)
         self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
 
-
-        self.health  = 30
         self.speed   = 3
         self.damage  = 10
         self.cadence = 2 * FRAME_RATE
@@ -98,10 +99,8 @@ class Swordman(Ally):
                 self.rect = newpos
 
     def find_new_target(self):
-        if self.time_before_next_hit > 1:
-            self.time_before_next_hit -= 1
+        Ally.find_new_target(self)
         self.can_attack = 0
-        self.has_target = 0
         distance = 2*HEIGHT
         for unit in self.units:
                     if unit.attaque: # On suppose pour l'instant que toutes les unites sont a la barriere lorsqu'elles attaquent
@@ -113,29 +112,16 @@ class Swordman(Ally):
 
 class Gunman(Ally):
     """
-       Create a swordman
+       Create a gunman
     """
     def __init__(self, unit_group):
         self.image, self.rect = load_image('gunman.bmp', colorkey=-1)
         Ally.__init__(self, unit_group)
         self.rect.midleft = BARRIERE + 40, int((HEIGHT_MENU + HEIGHT)/3)
 
-        self.health  = 30
         self.speed   = 3
         self.damage  = 10
         self.cadence = 2 * FRAME_RATE
-
-
-
-    def update(self):
-        if self.has_target:
-            if self.attaque:
-                self.attaque = 0
-            else:
-                self._aim()
-        else:
-            self.find_new_target()
-
 
     def _aim(self):
         """
@@ -148,7 +134,7 @@ class Gunman(Ally):
 
 
     def find_new_target(self):
-        self.has_target = 0
+        Ally.find_new_target(self)
         for unit in self.units:
             self.target = unit
             self.has_target = 1
