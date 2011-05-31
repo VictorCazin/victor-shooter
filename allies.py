@@ -103,9 +103,9 @@ class Gunman(Ally):
        Create a swordman
     """
     def __init__(self, unit_group):
-        self.image, self.rect = load_image('swordman.bmp', colorkey=-1)
+        self.image, self.rect = load_image('gunman.bmp', colorkey=-1)
         Ally.__init__(self)
-        self.rect.midleft = BARRIERE, int((HEIGHT_MENU + HEIGHT)/2)
+        self.rect.midleft = BARRIERE + 40, int((HEIGHT_MENU + HEIGHT)/3)
 
         self.units = unit_group
         self.health  = 30
@@ -113,14 +113,16 @@ class Gunman(Ally):
         self.damage  = 10
 
         self.has_target = 0
-        self.can_attack = 0
         self.attaque = 0
         self.cadence = 2 * FRAME_RATE
         self.time_before_next_hit =  1
 
     def update(self):
         if self.has_target:
-            self._aim()
+            if self.attaque:
+                self.attaque = 0
+            else:
+                self._aim()
         else:
             self.find_new_target()
 
@@ -128,7 +130,7 @@ class Gunman(Ally):
 
     def _aim(self):
         """
-            called when the gunman has a target and get ready to shoot
+            called when the gunman has a target and gets ready to shoot
         """
         self.time_before_next_hit -=1
         if self.time_before_next_hit == 0:
@@ -138,14 +140,8 @@ class Gunman(Ally):
 
 
     def find_new_target(self):
-        self.can_attack = 0
         self.has_target = 0
-        distance = 2*HEIGHT
         for unit in self.units:
-                    if unit.attaque: # On suppose pour l'instant que toutes les unites sont a la barriere lorsqu'elles attaquent
-                        new_distance = abs(unit.rect.centery - self.rect.centery)
-                        if new_distance < distance:
-                            distance = new_distance
-                            self.target = unit
-                            self.has_target = 1
+            self.target = unit
+            self.has_target = 1
 
