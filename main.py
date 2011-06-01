@@ -64,7 +64,7 @@ class Main():
 
 
         # Instanciations of creeps
-        self.wave = Wave1(self.units)
+        self.wave = Wave(self.units)
         '''
         for i in range(3):
             units.add(Faucheur())

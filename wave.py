@@ -19,11 +19,18 @@ from functions import *
 from unit import *
 
 
-
+TIME_WAVE = 5
 
 class Wave:
     def __init__(self, units_group):
-        self.units = units_group
+        self.units  = units_group
+        self.number = 0
+        self.next_wave()
+
+    def next_wave(self):
+        self.number += 1
+        fullname = os.path.join('waves', "Wave" + str(self.number) + ".txt")
+        self.file = open(fullname, "r")
         self.time = 0
 
     def release(self, creep, number=1):
@@ -47,6 +54,12 @@ class Wave:
 
     def update(self):
         self.time = self.time +   1.0 / FRAME_RATE
+        if self.time >= TIME_WAVE:
+            print "Fin de la wave numero ", self.number
+            self.file.close()
+            self.next_wave()
+
+
 
 
 class Wave1(Wave):
