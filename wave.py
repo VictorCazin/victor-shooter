@@ -25,6 +25,8 @@ class Wave:
     def __init__(self, units_group):
         self.units  = units_group
         self.number = 0
+        self.event  = None
+        self.time_next_event = 0
         self.next_wave()
 
     def next_wave(self):
@@ -32,6 +34,15 @@ class Wave:
         fullname = os.path.join('waves', "Wave" + str(self.number) + ".txt")
         self.file = open(fullname, "r")
         self.time = 0
+        self.read_next_line()
+
+    def read_next_line(self):
+        print 'read next line'
+        self.event = self.file.readline()
+        self.event = self.event.split()
+        print "event = ", self.event
+        self.time_next_event = int(self.event[0])
+        self.event = self.event[1:]
 
     def release(self, creep, number=1):
         """
@@ -58,6 +69,14 @@ class Wave:
             print "Fin de la wave numero ", self.number
             self.file.close()
             self.next_wave()
+
+        if self.event is None:
+            self.read_next_line()
+        else:
+            if self.test_time(self.time_next_event):
+                exec('self.release(' + self.event[0] + ',' + self.event[1] +')')
+                # same as: self.release(self.event[0], self.event[1]) but event contains strings
+
 
 
 
