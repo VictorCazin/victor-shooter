@@ -27,20 +27,26 @@ class Wave:
         self.number = 0
         self.event  = None
         self.time_next_event = 0
+        self.start_wave = 0
         self.next_wave()
 
     def next_wave(self):
         self.number += 1
-        fullname = os.path.join('waves', "Wave" + str(self.number) + ".txt")
-        self.file = open(fullname, "r")
         self.time = 0
-        self.read_next_line()
+        fullname = os.path.join('waves', "Wave" + str(self.number) + ".txt")
+        try:
+            self.file = open(fullname, "r")
+        except IOError:
+            print "No wave file anymore"
+            self.time_next_even = 0
+            self.start_wave = 0
+        else:
+            self.start_wave = 1
+            self.read_next_line()
 
     def read_next_line(self):
-        print 'read next line'
         self.event = self.file.readline()
         self.event = self.event.split()
-        print "event = ", self.event
         self.time_next_event = int(self.event[0])
         self.event = self.event[1:]
 
@@ -64,18 +70,19 @@ class Wave:
             return False
 
     def update(self):
-        self.time = self.time +   1.0 / FRAME_RATE
-        if self.time >= TIME_WAVE:
-            print "Fin de la wave numero ", self.number
-            self.file.close()
-            self.next_wave()
+        if self.start_wave:
+            self.time = self.time +   1.0 / FRAME_RATE
+            if self.time >= TIME_WAVE:
+                print "Fin de la wave numero ", self.number
+                self.file.close()
+                self.next_wave()
 
-        if self.event is None:
-            self.read_next_line()
-        else:
-            if self.test_time(self.time_next_event):
-                exec('self.release(' + self.event[0] + ',' + self.event[1] +')')
-                # same as: self.release(self.event[0], self.event[1]) but event contains strings
+            if self.event is None:
+                self.read_next_line()
+            else:
+                if self.test_time(self.time_next_event):
+                    exec('self.release(' + self.event[0] + ',' + self.event[1] +')')
+                    # same as: self.release(self.event[0], self.event[1]) but event contains strings
 
 
 
