@@ -147,10 +147,25 @@ class Main():
             # User events
             #*****************************
             for event in pygame.event.get():
+
                 if event.type == QUIT:
                     return
+
                 elif event.type == KEYDOWN and event.key == K_ESCAPE:
                     return
+
+                # ADMIN
+                #****************
+                elif event.type == KEYDOWN and event.key == K_o:
+                    self.wave.start_wave = 0
+                    print "Force stop wave"
+
+                elif event.type == KEYDOWN and event.key == K_p:
+                    self.wave.next_wave()
+                    print "Force next wave"
+                #****************
+                # ADMIN
+
                 elif event.type == MOUSEBUTTONDOWN:
                     for unit in pygame.sprite.spritecollide(self.weapon, self.units, 0):
                         if self.weapon.touch(unit):
