@@ -20,6 +20,8 @@ if not pygame.mixer: print 'Warning, sound disabled'
 
 from functions import *
 
+from random import randint
+
 
 class Weapon(pygame.sprite.Sprite):
     """
@@ -34,10 +36,12 @@ class Weapon(pygame.sprite.Sprite):
 
     def update(self):
         """ move the cursor based on the mouse position"""
-        pos = pygame.mouse.get_pos()
-        self.rect.midtop = pos
+
         if self.shooting:
             self.reload()
+        else:
+            pos = pygame.mouse.get_pos()
+            self.rect.midtop = pos
 
     def touch(self, target):
         """ returns true if the fist collides with the target """
@@ -55,7 +59,18 @@ class Weapon(pygame.sprite.Sprite):
 
 
     def reload(self):
-        self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
+        direction = randint(0,3)
+        if direction == 0:
+            newpos = self.rect.move((0, 5))
+        elif direction == 1:
+            newpos = self.rect.move((0, -5))
+        elif direction == 2:
+            newpos = self.rect.move((5, 0))
+        elif direction == 3:
+            newpos = self.rect.move((-5, 0))
+
+        self.rect = newpos
+        #self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
         self.fire_rate -= 1
         if self.fire_rate == 0:
             self.unpunch()
