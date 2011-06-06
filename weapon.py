@@ -57,7 +57,8 @@ class Weapon(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self) #call Sprite initializer
         self.image, self.rect = load_image('viseur.bmp', colorkey=-1)
         self.shooting = 0
-        self.fire_rate = 1 * 60
+        self.RELOAD_FIRE_RATE = self.fire_rate
+
 
     def update(self):
         """ move the cursor based on the mouse position"""
@@ -80,16 +81,17 @@ class Weapon(pygame.sprite.Sprite):
         self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
         self.fire_rate -= 1
         if self.fire_rate == 0:
-            self.fire_rate = 1 * 60
             self.unpunch()
 
     def unpunch(self):
         """called to pull the cursor back"""
+        self.fire_rate = self.RELOAD_FIRE_RATE
         self.shooting = 0
 
 
 
 class SimpleGun(Weapon):
     def __init__(self):
+        self.fire_rate = 1 * 60
         Weapon.__init__(self)
         self.damage = 10
