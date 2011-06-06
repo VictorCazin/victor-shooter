@@ -116,7 +116,12 @@ class Main():
 
         pygame.display.flip()
 
+        # Ajout d'une musique mais ne boucle pas
+        #pygame.mixer.music.load("defcon.mp3")
+        #pygame.mixer.music.play()
+
         self.debut_jeu()
+
 
 
     def weapon_attack_unit(self, unit):
@@ -157,6 +162,7 @@ class Main():
 
                 elif event.type == KEYDOWN and event.key == K_ESCAPE:
                     return
+
 
                 # ADMIN
                 #****************

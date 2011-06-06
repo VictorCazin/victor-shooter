@@ -46,6 +46,11 @@ def load_sound(name):
     except pygame.error, message:
         print 'Cannot load sound:', wav
         raise SystemExit, message
+
+    if sound.get_length() < 0.1:
+        print 'WARNING : length of the sound ', name , ' is very short'
+        print 'The sound will probably not work, try a OGG file'
+
     return sound
 
 

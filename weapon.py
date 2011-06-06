@@ -53,6 +53,7 @@ class Weapon(pygame.sprite.Sprite):
         self.shooting = 1
         self.sound.play()
 
+
     def reload(self):
         self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
         self.fire_rate -= 1
@@ -71,4 +72,4 @@ class SimpleGun(Weapon):
         self.fire_rate = 1 * 60
         Weapon.__init__(self)
         self.damage = 10
-        self.sound = load_sound("gunshot.wav")
+        self.sound = load_sound("gunshot.ogg")
