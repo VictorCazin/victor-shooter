@@ -169,11 +169,8 @@ class Main():
                 elif event.type == MOUSEBUTTONDOWN:
                     for unit in pygame.sprite.spritecollide(self.weapon, self.units, 0):
                         if self.weapon.touch(unit):
+                            print "attaque "
                             self.unit_attacked(unit, self.weapon.damage)
-
-                elif event.type == MOUSEBUTTONUP:
-                    self.weapon.unpunch()
-
 
             #*****************************
             # Modele du jeu
