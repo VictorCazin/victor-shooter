@@ -19,35 +19,7 @@ if not pygame.font: print 'Warning, fonts disabled'
 if not pygame.mixer: print 'Warning, sound disabled'
 
 from functions import *
-'''
-class Weapon(pygame.sprite.Sprite):
-    """
-        moves a cursor on the screen, following the mouse
-    """
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self) #call Sprite initializer
-        self.image, self.rect = load_image('viseur.bmp', colorkey=-1)
-        self.shooting = 0
 
-    def update(self):
-        """ move the cursor based on the mouse position"""
-        pos = pygame.mouse.get_pos()
-        self.rect.midtop = pos
-        if self.shooting:
-            self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
-
-    def touch(self, target):
-        """ returns true if the fist collides with the target """
-        if not self.shooting:
-            self.shooting = 1
-            hitbox = self.rect.inflate(-5, -5) # Reduit le rect du sprite au moment ou on tire
-                                               # pour une meilleure precision
-            return hitbox.colliderect(target.rect)
-
-    def unpunch(self):
-        """called to pull the cursor back"""
-        self.shooting = 0
-'''
 
 class Weapon(pygame.sprite.Sprite):
     """
@@ -65,19 +37,23 @@ class Weapon(pygame.sprite.Sprite):
         pos = pygame.mouse.get_pos()
         self.rect.midtop = pos
         if self.shooting:
-            self.shoot()
+            self.reload()
 
     def touch(self, target):
         """ returns true if the fist collides with the target """
-        if not self.shooting:
-            self.shooting = 1
+        if self.shooting:
+            return 0
+        else:
             hitbox = self.rect.inflate(-5, -5) # Reduit le rect du sprite au moment ou on tire
                                                # pour une meilleure precision
             return hitbox.colliderect(target.rect)
-        else:
-            return 0
+
 
     def shoot(self):
+        self.shooting = 1
+        self.sound.play()
+
+    def reload(self):
         self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
         self.fire_rate -= 1
         if self.fire_rate == 0:
@@ -95,3 +71,4 @@ class SimpleGun(Weapon):
         self.fire_rate = 1 * 60
         Weapon.__init__(self)
         self.damage = 10
+        self.sound = load_sound("gunshot.wav")

@@ -134,8 +134,15 @@ def main():
     screen.blit(background, (0, 0))
     pygame.display.flip()
 
+    # inicia o player
+    pygame.mixer.init(44100, -16, 2, 1024)
+
+    # configura o volume da musica
+    pygame.mixer.music.set_volume(0.8)
+
     whiff_sound = load_sound('whiff.wav')
     punch_sound = load_sound('punch.wav')
+
     chimp = Chimp()
     fist = Fist()
     allsprites = pygame.sprite.RenderPlain((fist, chimp))

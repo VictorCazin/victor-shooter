@@ -119,6 +119,10 @@ class Main():
         self.debut_jeu()
 
 
+    def weapon_attack_unit(self, unit):
+        self.weapon.shoot()
+        self.unit_attacked(unit, self.weapon.damage)
+
     def unit_attacked(self, unit, damage):
         """
             called when a unit is attacked
@@ -169,7 +173,7 @@ class Main():
                 elif event.type == MOUSEBUTTONDOWN:
                     for unit in pygame.sprite.spritecollide(self.weapon, self.units, 0):
                         if self.weapon.touch(unit):
-                            self.unit_attacked(unit, self.weapon.damage)
+                            self.weapon_attack_unit(unit)
 
             #*****************************
             # Modele du jeu

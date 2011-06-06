@@ -35,6 +35,20 @@ def load_image(name, colorkey=None, reshape=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
+def load_sound(name):
+    class NoneSound:
+        def play(self): pass
+    if not pygame.mixer:
+        return NoneSound()
+    fullname = os.path.join('data', name)
+    try:
+        sound = pygame.mixer.Sound(fullname)
+    except pygame.error, message:
+        print 'Cannot load sound:', wav
+        raise SystemExit, message
+    return sound
+
+
 def DPS(damage_per_second):
     """
         compute the damage per frame from the damage per second
