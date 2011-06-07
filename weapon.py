@@ -10,6 +10,7 @@
 #-------------------------------------------------------------------------------
 #!/usr/bin/env python
 
+from __future__ import division
 
 import pygame
 from pygame.locals import *
@@ -61,16 +62,23 @@ class Weapon(pygame.sprite.Sprite):
     def reload(self):
         direction = randint(0,3)
         if direction == 0:
-            newpos = self.rect.move((0, 5))
+            movement = [0,5]
         elif direction == 1:
-            newpos = self.rect.move((0, -5))
+            movement = [0,-5]
         elif direction == 2:
-            newpos = self.rect.move((5, 0))
+            movement = [5,0]
         elif direction == 3:
-            newpos = self.rect.move((-5, 0))
+            movement = [-5, 0]
 
+        # Bring the cursor a little closer to the mouse position
+        pos = pygame.mouse.get_pos()
+        movement[0] = movement[0] + int((pos[0] - self.rect.centerx) /10)
+        movement[1] = movement[1] + int((pos[1] - self.rect.centery) /10)
+
+
+        newpos = self.rect.move(movement)
         self.rect = newpos
-        #self.rect.move_ip(5, 10) # Gere le deplacement du viseur si on tire
+
         self.fire_rate -= 1
         if self.fire_rate == 0:
             self.unpunch()
